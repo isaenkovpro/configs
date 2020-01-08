@@ -1,0 +1,312 @@
+[
+    {
+        "id": "3e539f99.8cbf",
+        "type": "server-state-changed",
+        "z": "34ac6e87.8cbf22",
+        "name": "Крышка солевого бака",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.pantry_tank_cap",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 1360,
+        "y": 100,
+        "wires": [
+            [
+                "f194f2c7.316b9",
+                "e7ba4af.fe316b8"
+            ],
+            []
+        ],
+        "outputLabels": [
+            "Открыт",
+            "Закрыт"
+        ]
+    },
+    {
+        "id": "f194f2c7.316b9",
+        "type": "api-current-state",
+        "z": "34ac6e87.8cbf22",
+        "name": "Показания ХВС",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.pantry_water_count",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1600,
+        "y": 120,
+        "wires": [
+            [
+                "13a06820.c56ad8"
+            ]
+        ]
+    },
+    {
+        "id": "13a06820.c56ad8",
+        "type": "mqtt out",
+        "z": "34ac6e87.8cbf22",
+        "name": "Salt refilled",
+        "topic": "/pantry/watercounter/salt_refill",
+        "qos": "0",
+        "retain": "true",
+        "broker": "338c62b5.037d7e",
+        "x": 1770,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e7ba4af.fe316b8",
+        "type": "api-call-service",
+        "z": "34ac6e87.8cbf22",
+        "name": "Flag Off",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.pantry_water_tank_refill_flag",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 1580,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "473e8189.fd0b5",
+        "type": "comment",
+        "z": "34ac6e87.8cbf22",
+        "name": "Запись показаний счетчика, при которых засыпалась соль",
+        "info": "",
+        "x": 2100,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3fb7bf49.22da4",
+        "type": "interval",
+        "z": "34ac6e87.8cbf22",
+        "name": "interval",
+        "interval": "12",
+        "onstart": false,
+        "msg": "ping",
+        "showstatus": false,
+        "unit": "hours",
+        "statusformat": "YYYY-MM-D HH:mm:ss",
+        "x": 1310,
+        "y": 300,
+        "wires": [
+            [
+                "f9d1c91c.f7a5c8"
+            ]
+        ]
+    },
+    {
+        "id": "f9d1c91c.f7a5c8",
+        "type": "api-current-state",
+        "z": "34ac6e87.8cbf22",
+        "name": "Уровень соли в баке",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.pantry_tank_salt_left",
+        "state_type": "num",
+        "state_location": "salt_level",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1560,
+        "y": 300,
+        "wires": [
+            [
+                "a0b2c8ce.090858"
+            ]
+        ]
+    },
+    {
+        "id": "a0b2c8ce.090858",
+        "type": "api-current-state",
+        "z": "34ac6e87.8cbf22",
+        "name": "Флаг поднят?",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.pantry_water_tank_refill_flag",
+        "state_type": "str",
+        "state_location": "refill_flag",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1760,
+        "y": 300,
+        "wires": [
+            [
+                "42a2c038.41383"
+            ]
+        ]
+    },
+    {
+        "id": "42a2c038.41383",
+        "type": "function",
+        "z": "34ac6e87.8cbf22",
+        "name": "calc",
+        "func": "if ((msg.salt_level < 10) && (msg.refill_flag == \"off\")) {\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1910,
+        "y": 300,
+        "wires": [
+            [
+                "3261a9a1.b13ed6"
+            ]
+        ]
+    },
+    {
+        "id": "3261a9a1.b13ed6",
+        "type": "api-call-service",
+        "z": "34ac6e87.8cbf22",
+        "name": "Flag On",
+        "server": "b9490f48.586ed",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.pantry_water_tank_refill_flag",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 2040,
+        "y": 300,
+        "wires": [
+            [
+                "c366e767.880648"
+            ]
+        ]
+    },
+    {
+        "id": "c366e767.880648",
+        "type": "function",
+        "z": "34ac6e87.8cbf22",
+        "name": "data",
+        "func": "msg.method = \"sendMessage\";\nmsg.payload = {\n    text: \"Уровень соли в баке \"+msg.salt_level+\"%.\\nПора досыпать 50 кг.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 300,
+        "wires": [
+            [
+                "4fec517e.86e1c"
+            ]
+        ]
+    },
+    {
+        "id": "4fec517e.86e1c",
+        "type": "telegrambot-payload",
+        "z": "34ac6e87.8cbf22",
+        "name": "Notify",
+        "bot": "b4eca378.4bbba",
+        "chatId": "12345678",
+        "sendMethod": "",
+        "payload": "",
+        "x": 2310,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f49978f0.3277f8",
+        "type": "comment",
+        "z": "34ac6e87.8cbf22",
+        "name": "Уведомление о низком уровне соли в баке",
+        "info": "",
+        "x": 2570,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b9490f48.586ed",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "legacy": false,
+        "hassio": true,
+        "rejectUnauthorizedCerts": true
+    },
+    {
+        "id": "338c62b5.037d7e",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "MQTT",
+        "broker": "172.16.1.33",
+        "port": "8883",
+        "tls": "",
+        "clientid": "nodered",
+        "usetls": true,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b4eca378.4bbba",
+        "type": "telegrambot-config",
+        "z": "",
+        "botname": "Telegram Bot",
+        "usernames": "",
+        "chatIds": "12345678",
+        "pollInterval": "300"
+    }
+]
