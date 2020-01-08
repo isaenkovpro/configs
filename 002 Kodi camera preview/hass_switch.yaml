@@ -1,0 +1,13 @@
+- platform: template
+  switches:
+    livingroom_tv_kodi:
+      friendly_name: Livingroom TV Kodi
+      value_template: "{{ is_state('switch.livingroom_tv_kodi', 'on') }}"
+      icon_template: mdi:kodi
+      turn_on:
+        - service: script.kodi_livingroom_turn_on_action
+        - service: switch.turn_off
+          entity_id: switch.livingroom_tv_kodi
+      turn_off:
+        delay:
+          seconds: 0
