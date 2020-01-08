@@ -1,0 +1,22 @@
+- platform: mqtt
+  name: Pantry Tank last refill
+  icon: mdi:basket-fill
+  state_topic: "/pantry/watercounter/salt_refill"
+  unit_of_measurement: "m³"
+
+- platform: template
+  sensors:
+    pantry_tank_salt_left:
+      friendly_name: "Pantry Tank salt left"
+      unit_of_measurement: "%"
+      value_template: "{{ (20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100 }}"
+      icon_template: >-
+        {% if 60 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 100 %}
+          mdi:delete
+        {% elif 30 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 60 %}
+          mdi:delete-outline
+        {% elif 10 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 30 %}
+          mdi:delete-alert-outline
+        {% elif ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 10 %}
+          mdi:delete-forever-outline
+        {% endif %}
