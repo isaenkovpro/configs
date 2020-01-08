@@ -1,0 +1,6 @@
+- platform: template
+  sensors:
+    livingroom_tv_state:
+      friendly_name: "Livingroom TV State"
+      value_template: "{{ states('media_player.cast_livingroom') != 'unknown' and not(is_state('media_player.cast_livingroom', 'unavailable')) }}"
+      
