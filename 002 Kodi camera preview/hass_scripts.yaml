@@ -1,0 +1,10 @@
+kodi_livingroom_turn_on_action:
+  alias: Turn ON Livingroom TV HDMI to Kodi
+  sequence:
+  - data:
+      addonid: script.json-cec
+      entity_id: media_player.kodi_livingroom
+      method: Addons.ExecuteAddon
+      params:
+        command: activate
+    service: kodi.call_method
