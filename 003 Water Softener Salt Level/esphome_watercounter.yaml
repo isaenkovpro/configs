@@ -23,8 +23,8 @@ wifi:
   manual_ip:
     static_ip: 172.16.1.120
     subnet: 255.255.255.0
-    gateway: 172.16.1.254
-    dns1: 172.16.1.254
+    gateway: 172.16.1.1
+    dns1: 172.16.1.1
 
 # Enable logging
 logger:
@@ -42,8 +42,26 @@ mqtt:
 
 globals:
   - id: water_count_var
-    type: float
+    type: int
     restore_value: no
+
+time:
+  - platform: sntp
+    on_time:
+      # Every 5 minutes
+      - seconds: 0
+        minutes: /5
+        then:
+          - if:
+              condition:
+                lambda: |-
+                  return id(water_count_var) > 0;
+              then:
+              - mqtt.publish:
+                  topic: /pantry/watercounter
+                  retain: true
+                  payload: !lambda |-
+                    return to_string(id(water_count_var));
 
 binary_sensor:
   - platform: gpio
@@ -73,18 +91,19 @@ binary_sensor:
               lambda: |-
                 return id(water_count_var) > 0;
             then:
-              - lambda: 'id(water_count_var) += 0.001;'
-              - mqtt.publish:
-                  topic: /pantry/watercounter
-                  retain: true
-                  payload: !lambda |-
-                    return to_string(id(water_count_var));
+              - lambda: 'id(water_count_var) += 1;'
+# Moved in "time" section to send accumulated values every 5 minutes
+#              - mqtt.publish:
+#                  topic: /pantry/watercounter
+#                  retain: true
+#                  payload: !lambda |-
+#                    return to_string(id(water_count_var));
 
 sensor:
   - platform: mqtt_subscribe
-    name: "Pantry Water count"
+    name: "Pantry Water count (L)"
     icon: "mdi:water-pump"
     id: water_counter
-    accuracy_decimals: 3
-    unit_of_measurement: 'm³'
+    accuracy_decimals: 0
+    unit_of_measurement: 'L'
     topic: /pantry/watercounter
