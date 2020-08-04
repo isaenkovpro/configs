@@ -1,3 +1,16 @@
+- platform: template
+  sensors:
+    pantry_water_count:
+      friendly_name: "Pantry Water count"
+      unit_of_measurement: 'm³'
+      icon_template: "mdi:water-pump"
+      value_template: >-
+          {% if states('sensor.pantry_water_count_l') in ['unavailable', 'unknown', 'none'] %}
+            unavailable
+          {% else %}
+            {{ states('sensor.pantry_water_count_l')|float / 1000 }}
+          {% endif %}
+
 - platform: mqtt
   name: Pantry Tank last refill
   icon: mdi:basket-fill
@@ -9,14 +22,19 @@
     pantry_tank_salt_left:
       friendly_name: "Pantry Tank salt left"
       unit_of_measurement: "%"
-      value_template: "{{ (20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100 }}"
+      value_template: >-
+        {% if 0 < ((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0) <= 100 %}
+          {{ ((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0) }}
+        {% elif ((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0) <= 0 %}
+          0
+        {% endif %}
       icon_template: >-
-        {% if 60 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 100 %}
+        {% if 60 < (((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0)) < 100 %}
           mdi:delete
-        {% elif 30 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 60 %}
+        {% elif 30 < (((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0)) < 60 %}
           mdi:delete-outline
-        {% elif 10 < ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 30 %}
+        {% elif 10 < (((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0)) < 30 %}
           mdi:delete-alert-outline
-        {% elif ((20 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float) | round(0))/20*100) < 10 %}
+        {% elif (((30 - (states('sensor.pantry_water_count')|float - states('sensor.pantry_tank_last_refill')|float))/30*100) | round(0)) < 10 %}
           mdi:delete-forever-outline
         {% endif %}
