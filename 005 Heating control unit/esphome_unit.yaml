@@ -1,0 +1,53 @@
+esphome:
+  name: esp16_heating_control_unit_1
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  domain: !secret wifi_domain
+  manual_ip:
+    static_ip: 172.16.1.116
+    subnet: 255.255.255.0
+    gateway: 172.16.1.1
+    dns1: 172.16.1.1
+
+logger:
+api:
+ota:
+
+dallas:
+  - pin: 2
+
+sensor:
+  - platform: dallas
+    address: 0xB1031635D6C6FF29
+    name: "1 Heating Flow Temperature"
+
+switch:
+  - platform: gpio
+    name: "Office Heater"
+    icon: "mdi:radiator"
+    pin: 16
+    # Normal closed
+    inverted: no
+  - platform: gpio
+    name: "Pantry Heater"
+    icon: "mdi:radiator"
+    pin: 14
+    # Normal closed
+    inverted: no
+  - platform: gpio
+    name: "Livingroom Heater"
+    icon: "mdi:radiator"
+    pin: 13
+    # Normal closed
+    inverted: no
+  - platform: gpio
+    name: "Kitchen Heater"
+    icon: "mdi:radiator"
+    pin: 12
+    # Normal closed
+    inverted: no
