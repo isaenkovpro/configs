@@ -1,0 +1,15 @@
+- id: '1604184082358'
+  alias: Термостаты в отопительный сезон
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_season
+    state: 'on'
+  action:
+  - service: homeassistant.turn_on
+    data: {}
+    entity_id: group.all_thermostats
+  mode: single
