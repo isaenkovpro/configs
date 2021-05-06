@@ -1,0 +1,13 @@
+- platform: generic_thermostat
+  name: Livingroom Thermostat
+  heater: switch.livingroom_heater
+  target_sensor: sensor.livingroom_temperature
+  min_temp: 23
+  max_temp: 27
+  ac_mode: false
+  cold_tolerance: 0.3
+  hot_tolerance: 0.1
+  min_cycle_duration:
+    minutes: 5
+  initial_hvac_mode: "off"
+  precision: 0.1
