@@ -1,11 +1,11 @@
 [
     {
-        "id": "d79fc8de.f18788",
+        "id": "bea3922e.21463",
         "type": "server-state-changed",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "Среднесуточная температура",
         "server": "b9490f48.586ed",
-        "version": 1,
+        "version": 3,
         "exposeToHomeAssistant": false,
         "haConfig": [
             {
@@ -34,25 +34,70 @@
         "ignorePrevStateUnavailable": false,
         "ignoreCurrentStateUnknown": true,
         "ignoreCurrentStateUnavailable": true,
-        "x": 170,
-        "y": 380,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 190,
+        "y": 260,
         "wires": [
             [
-                "7e1d26a9.e56708"
+                "25f47801.005a88"
             ]
         ]
     },
     {
-        "id": "7e1d26a9.e56708",
+        "id": "25f47801.005a88",
+        "type": "moment",
+        "z": "9b44df70.b0bda",
+        "name": "Month",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "Europe/Moscow",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "M",
+        "locale": "C",
+        "output": "month",
+        "outputType": "msg",
+        "outTz": "Europe/Moscow",
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "854e183c.ae3148"
+            ]
+        ]
+    },
+    {
+        "id": "854e183c.ae3148",
         "type": "switch",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "gt",
-                "v": "19",
+                "v": "17",
                 "vt": "num"
             },
             {
@@ -64,118 +109,152 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 375,
-        "y": 380,
+        "x": 515,
+        "y": 260,
         "wires": [
             [
-                "3f192048.27c14"
+                "11effb63.99a645"
             ],
             [
-                "62b76597.09070c"
+                "a9aa207a.6d68c"
             ]
         ],
         "l": false
     },
     {
-        "id": "62b76597.09070c",
-        "type": "api-current-state",
-        "z": "71cd56f3.9608b8",
-        "name": "Отопительный сезон?",
-        "server": "b9490f48.586ed",
-        "version": 1,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "input_boolean.heating_season",
-        "state_type": "str",
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 550,
-        "y": 400,
+        "id": "11effb63.99a645",
+        "type": "switch",
+        "z": "9b44df70.b0bda",
+        "name": "Only 5-9 months",
+        "property": "month",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "[5-9]",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 595,
+        "y": 240,
         "wires": [
             [
-                "e78d3f74.5f1bb",
-                "34d03dd9.53ccf2"
-            ],
-            []
-        ]
+                "1c344549.c7506b"
+            ]
+        ],
+        "l": false
     },
     {
-        "id": "3f192048.27c14",
+        "id": "a9aa207a.6d68c",
+        "type": "switch",
+        "z": "9b44df70.b0bda",
+        "name": "Except 6-9 months",
+        "property": "month",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "\\b([1-5]|1[0-2])\\b",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 595,
+        "y": 280,
+        "wires": [
+            [
+                "d4c702c2.ddb37"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1c344549.c7506b",
         "type": "api-current-state",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "Отопительный сезон?",
         "server": "b9490f48.586ed",
-        "version": 1,
+        "version": 2,
         "outputs": 2,
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "override_topic": false,
         "entity_id": "input_boolean.heating_season",
         "state_type": "str",
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 560,
-        "y": 360,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 760,
+        "y": 240,
         "wires": [
             [
-                "1260b583.695c5a",
-                "33f69c2b.5817b4"
+                "69ca4d43.0912b4",
+                "be0b8c06.4f2ea"
             ],
             []
         ]
     },
     {
-        "id": "e78d3f74.5f1bb",
-        "type": "template",
-        "z": "71cd56f3.9608b8",
-        "name": "ON",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{\n    \"domain\": \"input_boolean\",\n    \"service\": \"turn_on\",\n    \"data\": {\n        \"entity_id\": \"input_boolean.heating_season\"\n    }\n}\n",
-        "output": "str",
-        "x": 790,
-        "y": 440,
+        "id": "d4c702c2.ddb37",
+        "type": "api-current-state",
+        "z": "9b44df70.b0bda",
+        "name": "Отопительный сезон?",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.heating_season",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 760,
+        "y": 280,
         "wires": [
             [
-                "66aea88f.0a7518"
-            ]
+                "f8670a5f.54da98",
+                "8d56ad96.e6bad"
+            ],
+            []
         ]
     },
     {
-        "id": "34d03dd9.53ccf2",
+        "id": "69ca4d43.0912b4",
         "type": "function",
-        "z": "71cd56f3.9608b8",
-        "name": "data",
-        "func": "msg.payload = {\n    chatId: \"99999999\",\n    type: \"message\",\n    content: \"❄️ Начат сезон отопления\"\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 790,
-        "y": 400,
-        "wires": [
-            [
-                "98c4999b.a04a78"
-            ]
-        ]
-    },
-    {
-        "id": "1260b583.695c5a",
-        "type": "function",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "data",
         "func": "msg.payload = {\n    chatId: \"99999999\",\n    type: \"message\",\n    content: \"🌞 Завершён сезон отопления\"\n}\n\nreturn msg;",
         "outputs": 1,
@@ -183,18 +262,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
-        "y": 360,
+        "x": 990,
+        "y": 240,
         "wires": [
             [
-                "98c4999b.a04a78"
+                "48c2bc7c.9d7f54"
             ]
         ]
     },
     {
-        "id": "33f69c2b.5817b4",
+        "id": "be0b8c06.4f2ea",
         "type": "template",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "OFF",
         "field": "payload",
         "fieldType": "msg",
@@ -202,21 +281,73 @@
         "syntax": "mustache",
         "template": "{\n    \"domain\": \"input_boolean\",\n    \"service\": \"turn_off\",\n    \"data\": {\n        \"entity_id\": \"input_boolean.heating_season\"\n    }\n}\n",
         "output": "str",
-        "x": 790,
-        "y": 320,
+        "x": 990,
+        "y": 200,
         "wires": [
             [
-                "66aea88f.0a7518"
+                "cc96c012.38cf8"
             ]
         ]
     },
     {
-        "id": "66aea88f.0a7518",
+        "id": "f8670a5f.54da98",
+        "type": "template",
+        "z": "9b44df70.b0bda",
+        "name": "ON",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"domain\": \"input_boolean\",\n    \"service\": \"turn_on\",\n    \"data\": {\n        \"entity_id\": \"input_boolean.heating_season\"\n    }\n}\n",
+        "output": "str",
+        "x": 990,
+        "y": 320,
+        "wires": [
+            [
+                "cc96c012.38cf8"
+            ]
+        ]
+    },
+    {
+        "id": "8d56ad96.e6bad",
+        "type": "function",
+        "z": "9b44df70.b0bda",
+        "name": "data",
+        "func": "msg.payload = {\n    chatId: \"99999999\",\n    type: \"message\",\n    content: \"❄️ Начат сезон отопления\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 280,
+        "wires": [
+            [
+                "48c2bc7c.9d7f54"
+            ]
+        ]
+    },
+    {
+        "id": "48c2bc7c.9d7f54",
+        "type": "telegram sender",
+        "z": "9b44df70.b0bda",
+        "name": "Notify",
+        "bot": "f6e2842.9c49078",
+        "outputs": 1,
+        "x": 1095,
+        "y": 260,
+        "wires": [
+            []
+        ],
+        "l": false
+    },
+    {
+        "id": "cc96c012.38cf8",
         "type": "api-call-service",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "HA",
         "server": "b9490f48.586ed",
-        "version": 1,
+        "version": 3,
         "debugenabled": false,
         "service_domain": "",
         "service": "",
@@ -224,11 +355,18 @@
         "data": "",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "payload",
-        "output_location_type": "msg",
         "mustacheAltTags": false,
-        "x": 975,
-        "y": 380,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1175,
+        "y": 260,
         "wires": [
             []
         ],
@@ -238,27 +376,13 @@
         "l": false
     },
     {
-        "id": "98c4999b.a04a78",
-        "type": "telegram sender",
-        "z": "71cd56f3.9608b8",
-        "name": "Notify",
-        "bot": "f6e2842.9c49078",
-        "outputs": 1,
-        "x": 895,
-        "y": 380,
-        "wires": [
-            []
-        ],
-        "l": false
-    },
-    {
-        "id": "9ab44aca.215548",
+        "id": "32cb725d.6661ce",
         "type": "comment",
-        "z": "71cd56f3.9608b8",
+        "z": "9b44df70.b0bda",
         "name": "Включение отопительного сезона при среднесуточной температуре ниже 15 градусов",
         "info": "",
-        "x": 330,
-        "y": 320,
+        "x": 350,
+        "y": 200,
         "wires": []
     }
 ]
