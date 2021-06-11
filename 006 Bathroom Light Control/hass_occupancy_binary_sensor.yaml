@@ -1,0 +1,6 @@
+- platform: mqtt
+  name: 2 Bathroom Occupancy
+  state_topic: "2_bathroom/occupancy"
+  payload_on: "On"
+  payload_off: "Off"
+  device_class: occupancy
