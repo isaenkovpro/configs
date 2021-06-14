@@ -1,0 +1,710 @@
+[
+    {
+        "id": "ddddb38e.c7b2f",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ce4b7c28.7cffc",
+        "type": "interval",
+        "z": "ddddb38e.c7b2f",
+        "name": "interval",
+        "interval": "1",
+        "onstart": true,
+        "msg": "ping",
+        "showstatus": false,
+        "unit": "minutes",
+        "statusformat": "YYYY-MM-D HH:mm:ss",
+        "x": 70,
+        "y": 380,
+        "wires": [
+            [
+                "594db724.7fa298",
+                "bc4c8c56.d7cd",
+                "e3e39a0d.e1c408",
+                "2c4cf8e8.9b35a8",
+                "4a8cc50a.fcf3ac"
+            ]
+        ]
+    },
+    {
+        "id": "594db724.7fa298",
+        "type": "time-range-switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Morning",
+        "lat": "56.064468",
+        "lon": "37.376488",
+        "startTime": "sunrise",
+        "endTime": "09:30",
+        "startOffset": "+20",
+        "endOffset": 0,
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "2aeaf099.2b111"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bc4c8c56.d7cd",
+        "type": "time-range-switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Day",
+        "lat": "56.064468",
+        "lon": "37.376488",
+        "startTime": "09:30",
+        "endTime": "sunsetStart",
+        "startOffset": 0,
+        "endOffset": "-35",
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "d4a60f69.ab6f7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e3e39a0d.e1c408",
+        "type": "time-range-switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Evening",
+        "lat": "56.064468",
+        "lon": "37.376488",
+        "startTime": "sunsetStart",
+        "endTime": "21:30",
+        "startOffset": "-35",
+        "endOffset": 0,
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "4ca40d66.8476f4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2c4cf8e8.9b35a8",
+        "type": "time-range-switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Late evening",
+        "lat": "56.064468",
+        "lon": "37.376488",
+        "startTime": "21:30",
+        "endTime": "00:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "28330f61.3a4fe"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4a8cc50a.fcf3ac",
+        "type": "time-range-switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Night",
+        "lat": "56.064468",
+        "lon": "37.376488",
+        "startTime": "00:00",
+        "endTime": "sunrise",
+        "startOffset": 0,
+        "endOffset": "+20",
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "48c5cc59.5d3264"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2aeaf099.2b111",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "morning",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "8d10e3dc.3f103",
+                "47242f06.9ba06",
+                "446ab9d.dfbde48"
+            ]
+        ]
+    },
+    {
+        "id": "d4a60f69.ab6f7",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "day",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "8d10e3dc.3f103",
+                "47242f06.9ba06",
+                "45ae9a0e.52cfa4"
+            ]
+        ]
+    },
+    {
+        "id": "4ca40d66.8476f4",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "evening",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "8d10e3dc.3f103",
+                "47242f06.9ba06",
+                "6e17a260.914eac"
+            ]
+        ]
+    },
+    {
+        "id": "28330f61.3a4fe",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "late_evening",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "8d10e3dc.3f103",
+                "47242f06.9ba06",
+                "6de5708d.4ad4c"
+            ]
+        ]
+    },
+    {
+        "id": "48c5cc59.5d3264",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "night",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 500,
+        "wires": [
+            [
+                "8d10e3dc.3f103",
+                "47242f06.9ba06",
+                "a0679f47.8a314"
+            ]
+        ]
+    },
+    {
+        "id": "8d10e3dc.3f103",
+        "type": "change",
+        "z": "ddddb38e.c7b2f",
+        "name": "Set global",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "daytime",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "47242f06.9ba06",
+        "type": "rbe",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "46a5a317.07aebc"
+            ]
+        ]
+    },
+    {
+        "id": "446ab9d.dfbde48",
+        "type": "delay",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "8",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 675,
+        "y": 260,
+        "wires": [
+            [
+                "5b6b557b.f6c95c"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "45ae9a0e.52cfa4",
+        "type": "delay",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "8",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 675,
+        "y": 300,
+        "wires": [
+            [
+                "a4654573.b31688"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "6e17a260.914eac",
+        "type": "delay",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "8",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 675,
+        "y": 380,
+        "wires": [
+            [
+                "64fd8938.82cf98"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "6de5708d.4ad4c",
+        "type": "delay",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "6",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 675,
+        "y": 460,
+        "wires": [
+            [
+                "df21423f.94bb1"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "a0679f47.8a314",
+        "type": "delay",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 675,
+        "y": 500,
+        "wires": [
+            [
+                "8df6026c.c7337"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "46a5a317.07aebc",
+        "type": "mqtt out",
+        "z": "ddddb38e.c7b2f",
+        "name": "",
+        "topic": "daytime",
+        "qos": "1",
+        "retain": "true",
+        "broker": "338c62b5.037d7e",
+        "x": 880,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "5b6b557b.f6c95c",
+        "type": "link out",
+        "z": "ddddb38e.c7b2f",
+        "name": "Утро",
+        "links": [
+            "21b46d0f.7fa072",
+            "28fc4155.b2ccae",
+            "3cf33da1.022662"
+        ],
+        "x": 735,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a4654573.b31688",
+        "type": "link out",
+        "z": "ddddb38e.c7b2f",
+        "name": "День",
+        "links": [
+            "54ae2727.0f5138",
+            "55d292b6.0f032c",
+            "5b91ac6e.a43724",
+            "6af1da23.b55894"
+        ],
+        "x": 735,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "64fd8938.82cf98",
+        "type": "link out",
+        "z": "ddddb38e.c7b2f",
+        "name": "Вечер",
+        "links": [
+            "15fc01f1.63d19e",
+            "24a52d05.67c082",
+            "467413f2.cec65c",
+            "6cade57.856101c",
+            "c794d85.b3f8128",
+            "ce220446.abe2e8"
+        ],
+        "x": 735,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "df21423f.94bb1",
+        "type": "link out",
+        "z": "ddddb38e.c7b2f",
+        "name": "Поздний вечер",
+        "links": [
+            "ec673608.6a5db8",
+            "87f98117.63393"
+        ],
+        "x": 735,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8df6026c.c7337",
+        "type": "link out",
+        "z": "ddddb38e.c7b2f",
+        "name": "Ночь",
+        "links": [
+            "8d2a2bb9.0571d8",
+            "ea4846ad.1b8dc8",
+            "5d20dfaa.50f9c"
+        ],
+        "x": 735,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "5e98edf8.e52934",
+        "type": "switch",
+        "z": "ddddb38e.c7b2f",
+        "name": "Daytime",
+        "property": "daytime",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "night",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "late_evening",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "evening",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 378,
+        "y": 107,
+        "wires": [
+            [
+                "81dd8d1b.3e72"
+            ],
+            [
+                "81dd8d1b.3e72"
+            ],
+            [
+                "81dd8d1b.3e72"
+            ],
+            [
+                "eeab3a72.60e028"
+            ]
+        ],
+        "outputLabels": [
+            "Night",
+            "Late evening",
+            "Evening",
+            "Otherwise"
+        ]
+    },
+    {
+        "id": "eeab3a72.60e028",
+        "type": "api-current-state",
+        "z": "ddddb38e.c7b2f",
+        "name": "Lux (кухня)",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "26",
+        "halt_if_type": "num",
+        "halt_if_compare": "lt",
+        "entity_id": "sensor.kitchen_lightlevel",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 588,
+        "y": 147,
+        "wires": [
+            [
+                "81dd8d1b.3e72"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "81dd8d1b.3e72",
+        "type": "api-call-service",
+        "z": "ddddb38e.c7b2f",
+        "name": "Свет (кухня)",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.kitchen_light",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 770,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ba7858d.44282a",
+        "type": "server-state-changed",
+        "z": "ddddb38e.c7b2f",
+        "name": "Движение (кухня)",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.kitchen_motion_sensor",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": false,
+        "for": "",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "5e98edf8.e52934"
+            ],
+            []
+        ]
+    }
+]
