@@ -1,0 +1,1043 @@
+[
+    {
+        "id": "fd15b534.04ee48",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9f016b89.edeb18",
+        "type": "server-state-changed",
+        "z": "fd15b534.04ee48",
+        "name": "Звонок в дверь",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.corridor_doorbell_ding",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": false,
+        "for": "",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 160,
+        "wires": [
+            [
+                "96fbc9f0.88a2e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "96fbc9f0.88a2e8",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "120",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "65c28ed9.0a8e6",
+                "eed3b3a.5d4555"
+            ]
+        ]
+    },
+    {
+        "id": "65c28ed9.0a8e6",
+        "type": "stoptimer",
+        "z": "fd15b534.04ee48",
+        "duration": "1",
+        "units": "Second",
+        "payloadtype": "str",
+        "payloadval": "",
+        "name": "Timeout",
+        "x": 560,
+        "y": 160,
+        "wires": [
+            [
+                "4a1d76bc.4213b8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6a886333.f832cc",
+        "type": "telegram event",
+        "z": "fd15b534.04ee48",
+        "name": "Еще снимок",
+        "bot": "f6e2842.9c49078",
+        "event": "callback_query",
+        "autoanswer": true,
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "7d5306e4.b68658"
+            ]
+        ]
+    },
+    {
+        "id": "7d5306e4.b68658",
+        "type": "switch",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "property": "payload.content",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "RING MORE PIC",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 595,
+        "y": 120,
+        "wires": [
+            [
+                "4a1d76bc.4213b8"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "4a1d76bc.4213b8",
+        "type": "http request",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://192.168.1.51/ISAPI/Streaming/channels/101/picture?snapShotImageType=JPEG",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "digest",
+        "x": 750,
+        "y": 140,
+        "wires": [
+            [
+                "ff3c4b90.e504a8"
+            ]
+        ]
+    },
+    {
+        "id": "ff3c4b90.e504a8",
+        "type": "switch",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "property": "payload.chat.id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "9999999",
+                "vt": "str"
+            },
+            {
+                "t": "null"
+            },
+            {
+                "t": "eq",
+                "v": "8888888",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 910,
+        "y": 140,
+        "wires": [
+            [
+                "3edab718.b8c668"
+            ],
+            [
+                "3edab718.b8c668",
+                "4295b732.a42978"
+            ],
+            [
+                "4295b732.a42978"
+            ]
+        ],
+        "outputLabels": [
+            "Sergey",
+            "Empty",
+            null
+        ]
+    },
+    {
+        "id": "3edab718.b8c668",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Chat ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "99999999",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 120,
+        "wires": [
+            [
+                "d0a52ed6.209b5"
+            ]
+        ]
+    },
+    {
+        "id": "d0a52ed6.209b5",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Data",
+        "func": "context.global.keyboard = { messageId : msg.payload.messageId };\n\nvar opts = {\n  reply_to_message_id: msg.payload.messageId,\n  reply_markup: JSON.stringify({\n    \"inline_keyboard\": [[\n                {\n                    \"text\": \"📷 Eщё снимок\",\n                    \"callback_data\": \"RING MORE PIC\"\n                }]\n            ]\n  })\n};\n\nmsg.payload = {\n    chatId: msg.chatId,\n    type: \"photo\",\n    content: msg.payload,\n    caption: \"🔔 Звонок в дверь\",\n    options: opts\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 140,
+        "wires": [
+            [
+                "9a15c39c.d532"
+            ]
+        ]
+    },
+    {
+        "id": "9a15c39c.d532",
+        "type": "telegram sender",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "bot": "f6e2842.9c49078",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1390,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4295b732.a42978",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Chat ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "8888888",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 160,
+        "wires": [
+            [
+                "d0a52ed6.209b5"
+            ]
+        ]
+    },
+    {
+        "id": "eed3b3a.5d4555",
+        "type": "api-current-state",
+        "z": "fd15b534.04ee48",
+        "name": "TV Livingroom",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.livingroom_tv_state",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 300,
+        "y": 300,
+        "wires": [
+            [
+                "9dfd6ea5.6255"
+            ],
+            [
+                "631679c3.141578"
+            ]
+        ]
+    },
+    {
+        "id": "9dfd6ea5.6255",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "TV status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_tv_status",
+                "pt": "msg",
+                "to": "on",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "56da301b.3477a"
+            ]
+        ]
+    },
+    {
+        "id": "631679c3.141578",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "TV status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_tv_status",
+                "pt": "msg",
+                "to": "off",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 320,
+        "wires": [
+            [
+                "56da301b.3477a"
+            ]
+        ]
+    },
+    {
+        "id": "56da301b.3477a",
+        "type": "api-current-state",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi Livingroom",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "playing",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "media_player.kodi_livingroom",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "3078c290.948d9e"
+            ],
+            [
+                "3e2fb6b7.4a64ea"
+            ]
+        ]
+    },
+    {
+        "id": "3078c290.948d9e",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_kodi_status",
+                "pt": "msg",
+                "to": "playing",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "b8cd7ae8.3af688"
+            ]
+        ]
+    },
+    {
+        "id": "3e2fb6b7.4a64ea",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_kodi_status",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 400,
+        "wires": [
+            [
+                "b8cd7ae8.3af688"
+            ]
+        ]
+    },
+    {
+        "id": "b8cd7ae8.3af688",
+        "type": "api-current-state",
+        "z": "fd15b534.04ee48",
+        "name": "Cast Livingroom",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "playing",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "media_player.cast_livingroom",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 300,
+        "y": 460,
+        "wires": [
+            [
+                "198da4af.354efb"
+            ],
+            [
+                "872594d2.187c58"
+            ]
+        ]
+    },
+    {
+        "id": "198da4af.354efb",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Cast status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_cast_status",
+                "pt": "msg",
+                "to": "playing",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "44b931b4.dde44"
+            ]
+        ]
+    },
+    {
+        "id": "872594d2.187c58",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Cast status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "livingroom_cast_status",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 480,
+        "wires": [
+            [
+                "44b931b4.dde44"
+            ]
+        ]
+    },
+    {
+        "id": "44b931b4.dde44",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "data",
+        "func": "if (msg.livingroom_tv_status == \"on\") {\n    msg.kodi_service = \"kodi_livingroom_notifier\"\n    msg.kodi_name = \"media_player.kodi_livingroom\"\n    msg.tv_source = \"switch.livingroom_tv_kodi\"\n    if ((msg.livingroom_kodi_status == \"playing\") && (msg.livingroom_cast_status != \"playing\")) {\n        return [msg, null]\n    } else if ((msg.livingroom_kodi_status != \"playing\") && (msg.livingroom_cast_status != \"playing\")) {\n        return [null, msg]\n    }\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "f978d275.ceb4c",
+                "c0f778fa.ac9448",
+                "177f145e.c9c52c",
+                "b3b9bba.5bfe148"
+            ],
+            [
+                "b9933d4b.f5e5d",
+                "177f145e.c9c52c"
+            ]
+        ]
+    },
+    {
+        "id": "f978d275.ceb4c",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Ding",
+        "func": "msg.payload = {\n    service: msg.kodi_service,\n    data: {\n        \"title\": \"Звонок в дверь\",\n        \"message\": \"Звонок в дверь\",\n        \"data\": {\n            \"displaytime\": 10000,\n            \"icon\": \"http://172.16.1.3:8123/local/images/kodi_ding.png\"\n        }\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 300,
+        "wires": [
+            [
+                "1b038a66.796fc6"
+            ]
+        ]
+    },
+    {
+        "id": "c0f778fa.ac9448",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Fullscreen",
+        "func": "msg.payload = {\n    data: {\n        \"entity_id\": msg.kodi_name,\n        \"method\": \"Addons.ExecuteAddon\",\n        \"addonid\": \"plugin.video.surveillanceroom\",\n        \"params\": \"action=single_camera_no_controls&camera_number=2\"\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 420,
+        "wires": [
+            [
+                "984d1a26.905238",
+                "1fb046db.e41fe9"
+            ]
+        ]
+    },
+    {
+        "id": "177f145e.c9c52c",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Preview",
+        "func": "msg.payload = {\n    data: {\n        \"entity_id\": msg.kodi_name,\n        \"method\": \"Addons.ExecuteAddon\",\n        \"addonid\": \"plugin.video.surveillanceroom\",\n        \"params\": \"action=show_preview&camera_number=2\"\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 380,
+        "wires": [
+            [
+                "984d1a26.905238",
+                "ac428d66.c98c8"
+            ]
+        ]
+    },
+    {
+        "id": "b3b9bba.5bfe148",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi name",
+        "func": "msg.payload = {\n    data: {\n        \"entity_id\": msg.kodi_name\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 340,
+        "wires": [
+            [
+                "7c68d79f.b82308"
+            ]
+        ]
+    },
+    {
+        "id": "b9933d4b.f5e5d",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Source",
+        "func": "msg.payload = \n{\n    data: {\n        \"entity_id\": msg.tv_source,\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 460,
+        "wires": [
+            [
+                "905a9a46.5470f8",
+                "856436ab.16a478"
+            ]
+        ]
+    },
+    {
+        "id": "905a9a46.5470f8",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "f978d275.ceb4c"
+            ]
+        ]
+    },
+    {
+        "id": "1b038a66.796fc6",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi notify",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1130,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "984d1a26.905238",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi call",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "kodi",
+        "service": "call_method",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1120,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1fb046db.e41fe9",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "32",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1120,
+        "y": 440,
+        "wires": [
+            [
+                "df077307.48a3b"
+            ]
+        ]
+    },
+    {
+        "id": "ac428d66.c98c8",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "36",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1120,
+        "y": 360,
+        "wires": [
+            [
+                "d9f0be42.1e56e"
+            ]
+        ]
+    },
+    {
+        "id": "7c68d79f.b82308",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Media pause",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "media_player",
+        "service": "media_play_pause",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1130,
+        "y": 320,
+        "wires": [
+            [
+                "b83a0255.369fe"
+            ]
+        ]
+    },
+    {
+        "id": "856436ab.16a478",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Set TV source",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1140,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d9f0be42.1e56e",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Back",
+        "func": "msg.payload = {\n    data: {\n        \"entity_id\": msg.kodi_name,\n        \"method\": \"Input.Back\"\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 360,
+        "wires": [
+            [
+                "984d1a26.905238"
+            ]
+        ]
+    },
+    {
+        "id": "df077307.48a3b",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Name",
+        "func": "msg.payload = {\n    entity_id: msg.kodi_name\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 440,
+        "wires": [
+            [
+                "7d3a4f11.178c3"
+            ]
+        ]
+    },
+    {
+        "id": "b83a0255.369fe",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1280,
+        "y": 320,
+        "wires": [
+            [
+                "67d3df46.400d5"
+            ]
+        ]
+    },
+    {
+        "id": "7d3a4f11.178c3",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Camera stop",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "media_player",
+        "service": "media_stop",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1470,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67d3df46.400d5",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Media play",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "media_player",
+        "service": "media_play",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 1430,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    }
+]
