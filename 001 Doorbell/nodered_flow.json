@@ -1,0 +1,530 @@
+[
+    {
+        "id": "fd15b534.04ee48",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e0f64da0.c0817",
+        "type": "interval",
+        "z": "fd15b534.04ee48",
+        "name": "interval",
+        "interval": "1",
+        "onstart": true,
+        "msg": "ping",
+        "showstatus": false,
+        "unit": "minutes",
+        "statusformat": "YYYY-MM-D HH:mm:ss",
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "b43c9154.0a918"
+            ]
+        ]
+    },
+    {
+        "id": "b43c9154.0a918",
+        "type": "time-range-switch",
+        "z": "fd15b534.04ee48",
+        "name": "Sleeptime",
+        "lat": "55.00",
+        "lon": "37.00",
+        "startTime": "22:00",
+        "endTime": "09:00",
+        "startOffset": "0",
+        "endOffset": 0,
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "70939410.71bf1c"
+            ],
+            [
+                "a71468e9.d47168"
+            ]
+        ]
+    },
+    {
+        "id": "70939410.71bf1c",
+        "type": "api-current-state",
+        "z": "fd15b534.04ee48",
+        "name": "Статус звонка",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "switch.corridor_doorbell",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 460,
+        "y": 140,
+        "wires": [
+            [
+                "f28e5d04.a653b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f28e5d04.a653b",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Дверной звонок",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.corridor_doorbell",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 680,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a71468e9.d47168",
+        "type": "api-current-state",
+        "z": "fd15b534.04ee48",
+        "name": "Статус звонка",
+        "server": "b9490f48.586ed",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "switch.corridor_doorbell",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 460,
+        "y": 180,
+        "wires": [
+            [
+                "9796db3.788e328"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9796db3.788e328",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Дверной звонок",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.corridor_doorbell",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 680,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f016b89.edeb18",
+        "type": "server-state-changed",
+        "z": "fd15b534.04ee48",
+        "name": "Звонок в дверь",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.corridor_doorbell_ding",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": false,
+        "for": "",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "96fbc9f0.88a2e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "96fbc9f0.88a2e8",
+        "type": "delay",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "120",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 360,
+        "y": 340,
+        "wires": [
+            [
+                "65c28ed9.0a8e6",
+                "2618bb1b.e9dff4"
+            ]
+        ]
+    },
+    {
+        "id": "65c28ed9.0a8e6",
+        "type": "stoptimer",
+        "z": "fd15b534.04ee48",
+        "duration": "1",
+        "units": "Second",
+        "payloadtype": "str",
+        "payloadval": "",
+        "name": "Timeout",
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "4a1d76bc.4213b8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6a886333.f832cc",
+        "type": "telegram event",
+        "z": "fd15b534.04ee48",
+        "name": "Еще снимок",
+        "bot": "f6e2842.9c49078",
+        "event": "callback_query",
+        "autoanswer": true,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "7d5306e4.b68658"
+            ]
+        ]
+    },
+    {
+        "id": "7d5306e4.b68658",
+        "type": "switch",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "property": "payload.content",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "RING MORE PIC",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 635,
+        "y": 300,
+        "wires": [
+            [
+                "4a1d76bc.4213b8"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "4a1d76bc.4213b8",
+        "type": "http request",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://192.168.1.51/ISAPI/Streaming/channels/101/picture?snapShotImageType=JPEG",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "digest",
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "ff3c4b90.e504a8"
+            ]
+        ]
+    },
+    {
+        "id": "ff3c4b90.e504a8",
+        "type": "switch",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "property": "payload.chat.id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "9999999",
+                "vt": "str"
+            },
+            {
+                "t": "null"
+            },
+            {
+                "t": "eq",
+                "v": "8888888",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 950,
+        "y": 320,
+        "wires": [
+            [
+                "3edab718.b8c668"
+            ],
+            [
+                "3edab718.b8c668",
+                "4295b732.a42978"
+            ],
+            [
+                "4295b732.a42978"
+            ]
+        ],
+        "outputLabels": [
+            "Sergey",
+            "Empty",
+            null
+        ]
+    },
+    {
+        "id": "3edab718.b8c668",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Chat ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "99999999",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1100,
+        "y": 300,
+        "wires": [
+            [
+                "d0a52ed6.209b5"
+            ]
+        ]
+    },
+    {
+        "id": "d0a52ed6.209b5",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Data",
+        "func": "context.global.keyboard = { messageId : msg.payload.messageId };\n\nvar opts = {\n  reply_to_message_id: msg.payload.messageId,\n  reply_markup: JSON.stringify({\n    \"inline_keyboard\": [[\n                {\n                    \"text\": \"📷 Eщё снимок\",\n                    \"callback_data\": \"RING MORE PIC\"\n                }]\n            ]\n  })\n};\n\nmsg.payload = {\n    chatId: msg.chatId,\n    type: \"photo\",\n    content: msg.payload,\n    caption: \"🔔 Звонок в дверь\",\n    options: opts\n};\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 320,
+        "wires": [
+            [
+                "9a15c39c.d532"
+            ]
+        ]
+    },
+    {
+        "id": "9a15c39c.d532",
+        "type": "telegram sender",
+        "z": "fd15b534.04ee48",
+        "name": "",
+        "bot": "f6e2842.9c49078",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1430,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4295b732.a42978",
+        "type": "change",
+        "z": "fd15b534.04ee48",
+        "name": "Chat ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "8888888",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1100,
+        "y": 340,
+        "wires": [
+            [
+                "d0a52ed6.209b5"
+            ]
+        ]
+    },
+    {
+        "id": "2618bb1b.e9dff4",
+        "type": "function",
+        "z": "fd15b534.04ee48",
+        "name": "Ding",
+        "func": "msg.payload = {\n    service: \"kodi_livingroom_notifier\",\n    data: {\n        \"title\": \"Звонок в дверь\",\n        \"message\": \"Звонок в дверь\",\n        \"data\": {\n            \"displaytime\": 10000,\n            \"icon\": \"http://172.16.1.3:8123/local/images/kodi_ding.png\"\n        }\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 420,
+        "wires": [
+            [
+                "caae558f.e8dac8"
+            ]
+        ]
+    },
+    {
+        "id": "caae558f.e8dac8",
+        "type": "api-call-service",
+        "z": "fd15b534.04ee48",
+        "name": "Kodi notify",
+        "server": "b9490f48.586ed",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "",
+        "entityId": "",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 710,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    }
+]
