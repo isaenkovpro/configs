@@ -1,5 +1,5 @@
 esphome:
-  name: esp16_heating_control_unit_1
+  name: esp16-heating-control-unit-1
   platform: ESP8266
   board: d1_mini
 
